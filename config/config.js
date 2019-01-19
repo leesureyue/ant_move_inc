@@ -1,7 +1,11 @@
 export default {
     plugins: [
         ['umi-plugin-react', {
-          antd: true
+          antd: true,
+          dva: true,
+          locale: {
+            enable: true,
+        },
         }],
       ],
       routes: [{
