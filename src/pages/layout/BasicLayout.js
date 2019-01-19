@@ -8,12 +8,12 @@ class BasicLayout extends Component {
     render() {
         return (
             <Layout>
-                <Sider style={{background:'#fff',textAlign:'center',padding:0}}>
+                <Sider width={256} style={{ minHeight: '100vh', color: 'white' }}>
                     Sider</Sider>
                 <Layout>
-                    <Content>Content</Content>
-                    <Header>Header</Header>
-                    <Footer>Footer</Footer>
+                    <Header style={{ background: '#fff', textAlign: 'center', padding: 0 }}>Header</Header>
+                    <Content style={{ margin: '24px 16px 0' }}>Content</Content>
+                    <Footer  style={{ textAlign: 'center' }}>Footer</Footer>
                 </Layout>
             </Layout>
         )

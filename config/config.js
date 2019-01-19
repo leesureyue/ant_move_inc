@@ -3,5 +3,9 @@ export default {
         ['umi-plugin-react', {
           antd: true
         }],
-      ]
+      ],
+      routes: [{
+        path: '/',
+        component: './layout/BasicLayout',
+      }]
 }
