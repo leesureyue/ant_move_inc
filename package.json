@@ -1,0 +1,20 @@
+{
+  "name": "ant_move_inc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "umi dev",
+    "build": "umi build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "antd": "^3.12.3"
+  },
+  "devDependencies": {
+    "umi-plugin-react": "^1.4.1"
+  }
+}
