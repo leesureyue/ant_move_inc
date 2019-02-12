@@ -32,7 +32,7 @@ class BasicLayout extends Component {
                         {this.props.children}
                         </div>
                     </Content>
-                    <Footer  style={{ textAlign: 'center' }}>Footer</Footer>
+                    <Footer  style={{ textAlign: 'center' }}>@CopyRight Leesure</Footer>
                 </Layout>
             </Layout>
         )

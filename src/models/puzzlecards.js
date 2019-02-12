@@ -20,10 +20,6 @@ export default {
       const puzzle = yield call(request, endPointURI);
       yield put({ type: 'addNewCard', payload: puzzle });
 
-      yield call(delay, 3000);
-
-      const puzzle2 = yield call(request, endPointURI);
-      yield put({ type: 'addNewCard', payload: puzzle2 });
     }
   },
   reducers: {
@@ -31,6 +27,8 @@ export default {
       const nextCounter = state.counter + 1;
       const newCardWithId = { ...newCard, id: nextCounter };
       const nextData = state.data.concat(newCardWithId);
+
+      console.log("nextData",nextData);
       return {
         data: nextData,
         counter: nextCounter,
