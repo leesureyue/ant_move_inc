@@ -9,17 +9,21 @@ export default {
         }],
       ],
       routes: [{
-        path: '/',
+          path:'/',
+          component:'./index'
+        },{
+            path:'/register',
+            component:'./form/Register'
+        },
+        {
+        path: '/layout',
         component: './layout/BasicLayout',
         routes:[{
-            path:'/helloword',
-            component:'./HelloWord'
-        },{
-            path:'/dashboard',
+            path:'dashboard',
             routes:[
-                {path:'/dashboard/analysis',component:'./dashboard/Analysis'},
-                {path:'/dashboard/monitor',component:'./dashboard/Monitor'},
-                {path:'/dashboard/workplace',component:'./dashboard/Workplace'}
+                {path:'analysis',component:'./dashboard/Analysis'},
+                {path:'monitor',component:'./dashboard/Monitor'},
+                {path:'workplace',component:'./dashboard/Workplace'}
             ]
         }]
       }]
