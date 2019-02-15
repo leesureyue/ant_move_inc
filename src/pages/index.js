@@ -2,6 +2,7 @@
 import { Layout,Menu, Icon ,Modal,Form,Input
   ,Affix,Checkbox} from 'antd';
 import React from 'react';
+import Link from 'umi/link';
 
 import * as userService from '../service/UserService';
 
@@ -14,6 +15,7 @@ class CommonLayout extends React.Component{
   state = {
     current: '',
     visible:false,
+    registerVisible:false
   }
 
   //点击导航栏
@@ -23,15 +25,17 @@ class CommonLayout extends React.Component{
     });
     switch (e.key){
       case 'login':this.showModal() ;break;
-
-      case 'register': this.props.history.push('/register');break;
+      case 'register': this.showRegisterModal();break;
     }
   }
 
 
-  //弹窗
+  //弹出登陆窗
   showModal=()=>{
     this.setState({visible:true})
+  }
+  showRegisterModal=()=>{
+    this.setState({registerVisible:true})
   }
   //点击确定
   handleOK=()=>{
@@ -59,9 +63,10 @@ class CommonLayout extends React.Component{
     
     return (
       <div>
-      <Modal title={this.state.current} 
+      <Modal title={<span><Icon type='user'/>登陆</span>}
             visible={this.state.visible}
             onOk={this.handleOK}
+            style={{maxWidth:'400px'}}
             onCancel={this.handleCancel}>
             <Form style={{width:'300px',margin:'auto'}}>
               <Form.Item>
@@ -86,9 +91,12 @@ class CommonLayout extends React.Component{
         </Form.Item>
             </Form>
       </Modal>
+
+      <Modal title='注册'/>
+
       <Layout style={{height:'800px'}}>
-        <Affix>
-        <Menu style={{lineHeight: '64px'}}
+        <Header style={{position:'fixed',width:'100%'}}>
+        <Menu style={{lineHeight: '64px',textAlign:'right'}}
             onClick={this.handleClick}
             selectedKeys={[this.state.current]}
             mode="horizontal"
@@ -113,17 +121,16 @@ class CommonLayout extends React.Component{
             <Menu.Item key="contant">
               <a href="https://ant.design" target="_blank" rel="noopener noreferrer"><Icon type="phone" />联系我们</a>
             </Menu.Item>
-          </Menu></Affix>
-        <Content>
-            <div>
-                <h1>Page One</h1>
-            </div>
-
-            <div>
-              <h1>Page Two</h1>
-            </div>
+            <Menu.Item key='backManager'>
+              <Link to='/layout'/><Icon type='appstore'/>后台管理
+            </Menu.Item>
+          </Menu>
+          </Header>
+        <Content style={{ padding: '0', marginTop: 64 }}>
+             <h1>Test</h1>
         </Content>
-        <Footer>
+        
+        <Footer style={{textAlign:'center',color:'#000',backgroundColor:'#eee'}}>
             @CopyRight Leesure 
         </Footer>
       </Layout>
@@ -131,6 +138,5 @@ class CommonLayout extends React.Component{
     );
   }
 }
-
 
 export default Form.create({})(CommonLayout);

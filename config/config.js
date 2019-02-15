@@ -19,6 +19,9 @@ export default {
         path: '/layout',
         component: './layout/BasicLayout',
         routes:[{
+            path:'/layout',
+            component:'./dashboard/Analysis'
+            },{
             path:'dashboard',
             routes:[
                 {path:'analysis',component:'./dashboard/Analysis'},
