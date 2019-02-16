@@ -68,17 +68,20 @@ class CommonLayout extends React.Component{
             onOk={this.handleOK}
             style={{maxWidth:'400px'}}
             onCancel={this.handleCancel}>
-            <Form style={{width:'300px',margin:'auto'}}>
+            <Form style={{maxWidth:'300px',margin:'auto'}}>
               <Form.Item>
                 {getFieldDecorator('name',{
                   rules:[{required:true,message:'请输入用户名'}]
-                })(<Input prefix={<Icon type='user' style={{color:'#000'}}/>} placeholder='用户名/手机号'/>)}
+                })(<Input prefix={<Icon type='user' style={{color:'#000'}}/>} allowClear
+                         placeholder='用户名/手机号'/>)}
               </Form.Item>
 
               <Form.Item>
                 {getFieldDecorator('password',{
                   rules:[{required:true,message:'请输入密码'}]
-                })(<Input prefix={<Icon type='lock'/>} placeholder='密码' type='password'/>)}
+                })(<Input.Password prefix={<Icon type='lock'/>} 
+                      placeholder='密码' 
+                      type='password'/>)}
               </Form.Item>
               <Form.Item>
           {getFieldDecorator('remember', {
@@ -129,7 +132,7 @@ class CommonLayout extends React.Component{
         <Content style={{ padding: '0', marginTop: 64 }}>
              <h1>Test</h1>
         </Content>
-        
+
         <Footer style={{textAlign:'center',color:'#000',backgroundColor:'#eee'}}>
             @CopyRight Leesure 
         </Footer>
