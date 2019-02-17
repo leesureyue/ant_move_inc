@@ -45,7 +45,7 @@ class CommonLayout extends React.Component{
         let response = userService.login(values).then((data)=>{
           console.log(data)
         }).catch(()=>{
-          console.log("error!")
+          console.log("error!",err)
         });
         
         this.setState({visible:false})
@@ -73,7 +73,7 @@ class CommonLayout extends React.Component{
                 {getFieldDecorator('name',{
                   rules:[{required:true,message:'请输入用户名'}]
                 })(<Input prefix={<Icon type='user' style={{color:'#000'}}/>} allowClear
-                         placeholder='用户名/手机号'/>)}
+                         placeholder='邮箱/手机号'/>)}
               </Form.Item>
 
               <Form.Item>
@@ -84,21 +84,28 @@ class CommonLayout extends React.Component{
                       type='password'/>)}
               </Form.Item>
               <Form.Item>
-          {getFieldDecorator('remember', {
-            valuePropName: 'checked',
-            initialValue: true,
-          })(
-            <Checkbox>Remember me</Checkbox>
-          )}
-          <a className="login-form-forgot" href="">Forgot password</a>
+                {getFieldDecorator('vsCode',{
+                  rules:[{required:true,message:'We must make sure you are a human'}]
+                })(<Input style={{maxWidth:'150px'}}/>)}
+                <a href='#' style={{float:'right'}} >发送验证码</a>
+              </Form.Item>
+              <Form.Item>
+                {getFieldDecorator('remember', {
+                  valuePropName: 'checked',
+                  initialValue: true,
+                })(
+                  <Checkbox>记住我</Checkbox>
+                )}
+                <a  style={{float:'right'}} className="login-form-forgot" href="">忘记密码?</a>
         </Form.Item>
             </Form>
       </Modal>
 
       <Modal title='注册'/>
-
-      <Layout style={{height:'800px'}}>
-        <Header style={{position:'fixed',width:'100%'}}>
+      
+      <Layout style={{height:'1000px'}}>
+        <Affix>
+        <Header style={{width:'100%'}}>
         <Menu style={{lineHeight: '64px',textAlign:'right'}}
             onClick={this.handleClick}
             selectedKeys={[this.state.current]}
@@ -128,13 +135,20 @@ class CommonLayout extends React.Component{
               <Link to='/layout'/><Icon type='appstore'/>后台管理
             </Menu.Item>
           </Menu>
-          </Header>
+          </Header></Affix>
         <Content style={{ padding: '0', marginTop: 64 }}>
-             <h1>Test</h1>
+            <div style={{margin:'auto'}}>
+              <img src={require('../assets/logo.svg')}/>
+              <br/>
+              <Input.Search placeholder='请输入附近的店家' 
+                            onSearch={value=>{console.log(value)}}
+                            size='large' enterButton
+                            style={{maxWidth:'500px',margin:'auto'}}/>
+            </div>
         </Content>
 
         <Footer style={{textAlign:'center',color:'#000',backgroundColor:'#eee'}}>
-            @CopyRight Leesure 
+            @CopyRight Leesure · 河南大学软件学院
         </Footer>
       </Layout>
       </div>
