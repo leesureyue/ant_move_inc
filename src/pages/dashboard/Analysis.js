@@ -77,7 +77,6 @@ class PuzzleCardsPage extends Component {
   }
   render() {
      const {form:{getFieldDecorator}}=this.props;
-     console.log("this.props",this.props);
     return (
       <div>
           <Modal visible={this.state.visible} 
@@ -100,7 +99,6 @@ class PuzzleCardsPage extends Component {
           <Table title={()=>'表头'} bordered 
                 columns={this.columns}
                 rowKey='id'
-                 
                 pagination={this.state.pagination}
                 dataSource={this.state.dataSource}/>
       </div>

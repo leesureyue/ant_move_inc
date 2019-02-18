@@ -14,6 +14,9 @@ export default {
         },{
             path:'/register',
             component:'./form/Register'
+        },{
+            path:'/shop/detail',
+            component:'./user/detail'
         },
         {
         path: '/layout',

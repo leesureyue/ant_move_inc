@@ -1,6 +1,6 @@
 // 首页 
 import { Layout,Menu, Icon ,Modal,Form,Input
-  ,Affix,Checkbox} from 'antd';
+  ,Affix,Checkbox,Card} from 'antd';
 import React from 'react';
 import Link from 'umi/link';
 
@@ -9,15 +9,32 @@ import * as userService from '../service/UserService';
 const { Header, Footer, Sider, Content } = Layout;
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
+const {Meta} =Card;
 
 class CommonLayout extends React.Component{
 
   state = {
     current: '',
     visible:false,
-    registerVisible:false
+    registerVisible:false,
+    cardList:[{
+      id:'1',
+      title:"Europe Street 1",
+      description:"www.instagram.com"
+    },{
+      id:'2',
+      title:"Europe Street 2",
+      description:"www.instagram.com"
+    },{
+      id:'3',
+      title:"Europe Street 3",
+      description:"www.instagram.com"
+    },{
+      id:'4',
+      title:"Europe Street 4",
+      description:"www.instagram.com"
+    }]
   }
-
   //点击导航栏
   handleClick = (e) => {
     this.setState({
@@ -87,7 +104,7 @@ class CommonLayout extends React.Component{
                 {getFieldDecorator('vsCode',{
                   rules:[{required:true,message:'We must make sure you are a human'}]
                 })(<Input style={{maxWidth:'150px'}}/>)}
-                <a href='#' style={{float:'right'}} >发送验证码</a>
+                
               </Form.Item>
               <Form.Item>
                 {getFieldDecorator('remember', {
@@ -103,9 +120,9 @@ class CommonLayout extends React.Component{
 
       <Modal title='注册'/>
       
-      <Layout style={{height:'1000px'}}>
+      <Layout>
         <Affix>
-        <Header style={{width:'100%'}}>
+        <Header style={{width:'100%',boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)'}}>
         <Menu style={{lineHeight: '64px',textAlign:'right'}}
             onClick={this.handleClick}
             selectedKeys={[this.state.current]}
@@ -137,13 +154,36 @@ class CommonLayout extends React.Component{
           </Menu>
           </Header></Affix>
         <Content style={{ padding: '0', marginTop: 64 }}>
-            <div style={{margin:'auto'}}>
+            <div style={{textAlign:'center'}}>
               <img src={require('../assets/logo.svg')}/>
               <br/>
               <Input.Search placeholder='请输入附近的店家' 
                             onSearch={value=>{console.log(value)}}
                             size='large' enterButton
                             style={{maxWidth:'500px',margin:'auto'}}/>
+
+                          
+                        
+                        <br/>当前位置：杭州西湖区
+            </div>
+
+            <div style={{background: '#aaa'}}>
+                  {
+                    this.state.cardList.map(card=>{
+                      return (
+                        <Card  key={card.id}
+                            hoverable 
+                            extra={<a href="#">了解更多</a>}
+                            style={{ width: 240 , float:'left',margin:'10px'}}
+                            cover={<img alt="example" 
+                            src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+                          >
+                          <Meta 
+                            title={card.title}
+                            description={card.description}/>
+                        </Card>)
+                    })
+                  }
             </div>
         </Content>
 
