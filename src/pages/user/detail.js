@@ -2,7 +2,7 @@ import React from 'react';
 import GlobalMenu from '../../component/GlobalMenu';
 import ServiceList from '../../component/ServiceList';
 
-import { Layout, Menu, Badge,Icon ,Carousel,
+import { Layout,Icon ,Carousel,
     Avatar,Button,Affix,Input,Card,Tooltip,Row,Col} from 'antd';
 
 import moment from 'moment';
@@ -108,13 +108,13 @@ class DetailPage extends React.Component{
     }
 
 
-state = {
-    likes: 0,
-    dislikes: 0,
-    action: 'disliked',
-    key: 'tab1',
-    noTitleKey: 'app',
-  }
+    state = {
+        likes: 0,
+        dislikes: 0,
+        action: 'disliked',
+        key: 'tab1',
+        noTitleKey: 'app',
+    }
 
   like = () => {
     this.setState({
@@ -167,18 +167,13 @@ handleSubmit = () => {
       value: e.target.value,
     });
   }
-
-
-
-
     render(){
-        const { likes, dislikes, action } = this.state;
         const actions = [
             <span>
                 <Tooltip title="Like">
                 <Icon
                     type="like"
-                    theme={action === 'liked' ? 'filled' : 'outlined'}
+                    theme={this.state.action === 'liked' ? 'filled' : 'outlined'}
                     onClick={this.like}
                 />
                 </Tooltip>
@@ -190,7 +185,7 @@ handleSubmit = () => {
                 <Tooltip title="Dislike">
                 <Icon
                     type="dislike"
-                    theme={action === 'disliked' ? 'filled' : 'outlined'}
+                    theme={this.state.action === 'disliked' ? 'filled' : 'outlined'}
                     onClick={this.dislike}
                 />
                 </Tooltip>
@@ -202,9 +197,11 @@ handleSubmit = () => {
             ];
         return (
             <Layout>
+                <Affix>
                 <Header>
-                    <GlobalMenu />
-                </Header>                
+                <GlobalMenu /> 
+                </Header> 
+                </Affix>               
                 <Content style={{margin:'30px'}}>
 
                     <p>商家详情页面:</p>

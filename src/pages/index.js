@@ -4,6 +4,8 @@ import { Layout,Menu, Icon ,Modal,Form,Input
 import React from 'react';
 import Link from 'umi/link';
 
+import GlobalFooter from '../component/GlobalFooter';
+
 import * as userService from '../service/UserService';
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -188,7 +190,11 @@ class CommonLayout extends React.Component{
         </Content>
 
         <Footer style={{textAlign:'center',color:'#000',backgroundColor:'#eee'}}>
-            @CopyRight Leesure · 河南大学软件学院
+            <GlobalFooter className='global-footer' 
+            links={[{title:'SpringBoot',key:'1',href:'http://baidu.com'},{
+              title:'SpringBoot',key:'2',href:'http://baidu.com'
+            }]}
+            copyright='@CopyRight · Leesure 河南大学软件学院'/>
         </Footer>
       </Layout>
       </div>
