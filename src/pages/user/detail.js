@@ -2,8 +2,8 @@ import React from 'react';
 import GlobalMenu from '../../component/GlobalMenu';
 import ServiceList from '../../component/ServiceList';
 
-import { Layout,Icon ,Carousel,
-    Avatar,Button,Affix,Input,Card,Tooltip,Row,Col} from 'antd';
+import { Layout,Icon ,Carousel,Divider
+    ,Button,Affix,Input,Card,Tooltip,Row,Col} from 'antd';
 
 import moment from 'moment';
 import { Comment, Form, List} from 'antd'
@@ -234,7 +234,7 @@ handleSubmit = () => {
                     </div>
                 
                 
-                    <p>评价栏：</p>
+                    <Divider>评论区</Divider>
                     <List
                         className="comment-list"
                         header={`${data.length} replies`}

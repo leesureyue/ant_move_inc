@@ -17,6 +17,9 @@ export default {
         },{
             path:'/shop/detail',
             component:'./user/detail'
+        },{
+            path:'./shop/cart',
+            component:'./user/cart'
         },
         {
         path: '/layout',
