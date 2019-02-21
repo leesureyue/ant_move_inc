@@ -1,7 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
 import styles from './index.less';
-
+import {
+  Divider
+} from 'antd';
 
 const GlobalFooter = ({ className, links, copyright }) => {
     const clsString = classNames(styles.globalFooter, className);
@@ -10,9 +12,12 @@ const GlobalFooter = ({ className, links, copyright }) => {
         {links && (
           <div className={styles.links}>
             {links.map(link => (
-              <a key={link.key} target={link.blankTarget ? '_blank' : '_self'} href={link.href}>
+              <span>
+                <a key={link.key} target={link.blankTarget ? '_blank' : '_self'} href={link.href}>
                 {link.title}
               </a>
+                <Divider type = "vertical" />
+              </span>
             ))}
           </div>
         )}

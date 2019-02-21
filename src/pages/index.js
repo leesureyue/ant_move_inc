@@ -1,4 +1,4 @@
-// 首页 
+// 入口文件 ,首页 
 import { Layout,Menu, Icon ,Modal,Form,Input
   ,Affix,Card} from 'antd';
 import React from 'react';
@@ -10,9 +10,7 @@ import 'animate.css';
 import GlobalFooter from '../component/GlobalFooter';
 import GlobalMenu from '../component/GlobalMenu';
 
-const { Header, Footer, Sider, Content } = Layout;
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
+const { Header, Footer, Content } = Layout;
 const {Meta} =Card;
 
 class CommonLayout extends React.Component{
@@ -50,11 +48,13 @@ class CommonLayout extends React.Component{
           </Header></Affix>
         <Content className={styles.indexContent}>
             
-              <h1 className ='animated fadeInLeft slow'> Welcome to Ant Moving </h1>
-              <Input.Search placeholder='请输入附近的店家' 
+              <h1 className ='animated zoomIn'> Welcome to Ant Moving </h1>
+              <h2 className='animated fadeIn slower'> 
+                  this is a site platform for  houseing   moving </h2>
+              <Input.Search placeholder='请输入附近的店家'  
                             onSearch={value=>{console.log(value)}}
                             size='large' enterButton
-                            style={{maxWidth:'500px',margin:'auto'}}/>
+                            className={styles.contentInput}/>
               <br/>
               <img src={require('../images/index-content.png')} className={classNames(styles.img,'animated slideInUp')}/>  
                         
