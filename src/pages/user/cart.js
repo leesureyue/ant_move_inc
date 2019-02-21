@@ -19,8 +19,6 @@ const steps = [{
 
 
 class ShoppingCart extends React.Component{
-
-    
     constructor(props){
         super(props);
         this.state={
@@ -28,17 +26,15 @@ class ShoppingCart extends React.Component{
         }
     }
 
-
     next() {
         const current = this.state.current + 1;
         this.setState({ current });
       }
-    
+      
       prev() {
         const current = this.state.current - 1;
         this.setState({ current });
       }
-
       
     render(){
 

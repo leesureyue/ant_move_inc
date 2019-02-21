@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button ,Table,Modal,Form,Input,Icon} from 'antd';
+import { Card, Divider ,Table,Modal,Form,Input,Icon} from 'antd';
 
 class PuzzleCardsPage extends Component {
   constructor(props) {
@@ -33,10 +33,11 @@ class PuzzleCardsPage extends Component {
     title:'操作',
     render:(record)=>{
        
-      return (<Button.Group>
-        <Button onClick={()=>{this.handelModify(record)}}>编辑</Button>
-        <Button onClick={()=>{this.handleDelete(record.id)}}>删除</Button>
-      </Button.Group>)
+      return (<span>
+        <a onClick={()=>{this.handelModify(record)}}>编辑</a>
+        <Divider type="vertical" />
+        <a onClick={()=>{this.handleDelete(record.id)}}>删除</a>
+      </span>)
     }
   }]
 
