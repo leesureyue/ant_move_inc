@@ -13,29 +13,53 @@ import GlobalMenu from '../component/GlobalMenu';
 const { Header, Footer, Content } = Layout;
 const {Meta} =Card;
 
-class CommonLayout extends React.Component{
+//推荐店家面板
+class ExcellentStore extends React.Component{
 
+
+  state={
+    cardList:[],
+  }
+
+  componentWillMount(){
+    //todo send request 
+  }
+
+  constructor(props){
+    super(props);
+  }
+
+  render(){
+    return (
+
+      <div>
+        {
+          this.state.cardList.map(card=>{
+            return (
+              <Card  key={card.id}
+                  hoverable 
+                  extra={<a href="#">了解更多</a>}
+                  style={{ width: 240 , float:'left',margin:'10px'}}
+                  cover={<img alt="example" 
+                  src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+                >
+                <Meta 
+                  title={card.title}
+                  description={card.description}/>
+              </Card>)
+          })
+        }
+      </div>
+    )
+  }
+}
+
+
+class CommonLayout extends React.Component{
   state = {
     current: '',
     visible:false,
     registerVisible:false,
-    cardList:[{
-      id:'1',
-      title:"Europe Street 1",
-      description:"www.instagram.com"
-    },{
-      id:'2',
-      title:"Europe Street 2",
-      description:"www.instagram.com"
-    },{
-      id:'3',
-      title:"Europe Street 3",
-      description:"www.instagram.com"
-    },{
-      id:'4',
-      title:"Europe Street 4",
-      description:"www.instagram.com"
-    }]
   }
   render(){
     return (
@@ -56,30 +80,12 @@ class CommonLayout extends React.Component{
                             size='large' enterButton
                             className={styles.contentInput}/>
               <br/>
-              <img src={require('../images/index-content.png')} className={classNames(styles.img,'animated slideInUp')}/>  
-                        
-          
-            <br/>当前位置：杭州西湖区
-            
 
-            <div style={{background: '#aaa'}}>
-                  {
-                    this.state.cardList.map(card=>{
-                      return (
-                        <Card  key={card.id}
-                            hoverable 
-                            extra={<a href="#">了解更多</a>}
-                            style={{ width: 240 , float:'left',margin:'10px'}}
-                            cover={<img alt="example" 
-                            src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                          >
-                          <Meta 
-                            title={card.title}
-                            description={card.description}/>
-                        </Card>)
-                    })
-                  }
-            </div>
+              <h2>当前位置：杭州市西湖区</h2>
+              <img src={require('../images/index-content.png')} className={classNames(styles.img,'animated slideInUp')}/>              
+           
+           
+            
         </Content>
 
         <Footer className={styles.indexFooter}>

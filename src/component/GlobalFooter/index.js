@@ -12,7 +12,7 @@ const GlobalFooter = ({ className, links, copyright }) => {
         {links && (
           <div className={styles.links}>
             {links.map(link => (
-              <span>
+              <span key={link.key}>
                 <a key={link.key} target={link.blankTarget ? '_blank' : '_self'} href={link.href}>
                 {link.title}
               </a>
