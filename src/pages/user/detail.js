@@ -19,11 +19,6 @@ const tabList = [{
   tab: '在线预定',
 }];
 
-const contentList = {
-  tab1: <p>content1</p>,
-  tab2: <p>content 2</p>,
-};
-
 
 const data = [
   {
@@ -62,10 +57,34 @@ const CommentList=({comments})=>{
 
 }
 /**
+ * 商品介绍面板
+ */
+const ShopIntroduce=()=>(
+  <div>
+    Content One 
+  </div>
+)
+
+/**
+ * 商品在线预定
+ * @param {} param0 
+ */
+const ShopOnLineOrder=()=>(
+  <div>
+    Content Two
+  </div>
+)
+
+const contentList = {
+  tab1: <ShopIntroduce/>,
+  tab2: <ShopOnLineOrder/>,
+};
+/**
+ * 商品详情Tab展示以及轮播图
  * tabList 面板Tab页  activeKey：当前默认选中的Tab contentList :
  * @param {*} param0 
  */
-const ShopDetail=({tabList,activeKey,contentList})=>{
+const ShopDetail=({tabList,activeKey,contentList,onChange})=>(
   <div>
     <Row>
         <Col span={18} push={6}>
@@ -74,7 +93,7 @@ const ShopDetail=({tabList,activeKey,contentList})=>{
             title="店铺详情"
             tabList={tabList}
             activeTabKey={activeKey}
-            onTabChange={(key) => { this.onTabChange(key, 'key'); }}
+            onTabChange={onChange}
             >
             {contentList[activeKey]}
           </Card>
@@ -89,7 +108,7 @@ const ShopDetail=({tabList,activeKey,contentList})=>{
         </Carousel></Col>
     </Row>
   </div>
-}
+)
 
 //评论面板
 const Editor = ({
@@ -133,8 +152,7 @@ class DetailPage extends React.Component{
     });
   }
   onTabChange = (key, type) => {
-    console.log(key, type);
-    this.setState({ [type]: key });
+    this.setState({ key:key});
   }
 
   dislike = () => {
@@ -216,7 +234,8 @@ handleSubmit = () => {
                 <Content style={{margin:'30px'}}>
                     <ShopDetail tabList={tabList} 
                                 activeKey={this.state.key}
-                                contentList={contentList}/>
+                                contentList={contentList}
+                                onChange={this.onTabChange}/>
                     <Divider>评论</Divider>
                     <ServiceList/>
                 </Content>
