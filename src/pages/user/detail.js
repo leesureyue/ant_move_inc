@@ -1,15 +1,59 @@
 import React from 'react';
 import GlobalMenu from '../../component/GlobalMenu';
-import ServiceList from '../../component/ServiceList';
-
+import GlobalFooter from '../../component/GlobalFooter';
+import styles from '../index.less';
+import classNames from 'classnames';
 import { Layout,Icon ,Carousel,Divider
-    ,Button,Affix,Input,Card,Tooltip,Row,Col} from 'antd';
-
+  ,Button,Affix,Input,Card,Tooltip,Row,Col} from 'antd';
+  
 import moment from 'moment';
 import { Comment, Form, List} from 'antd'
+import ServiceList from '../../component/ServiceList';
 const {Header,Footer,Content} =Layout;
+//页面所需数据
+const tabList = [{
+  key: 'tab1',
+  tab: '介绍',
+}, {
+  key: 'tab2',
+  tab: '在线预定',
+}];
+
+const contentList = {
+  tab1: <p>content1</p>,
+  tab2: <p>content 2</p>,
+};
 
 
+const data = [
+  {
+    actions: [<span>Reply to</span>],
+    author: 'Han Solo',
+    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+    content: (
+      <p>We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.</p>
+    ),
+    datetime: (
+      <Tooltip title={moment().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss')}>
+        <span>{moment().subtract(1, 'days').fromNow()}</span>
+      </Tooltip>
+    ),
+  },
+  {
+    actions: [<span>Reply to</span>],
+    author: 'Leesure',
+    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+    content: (
+      <p>We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.</p>
+    ),
+    datetime: (
+      <Tooltip title={moment().subtract(2, 'days').format('YYYY-MM-DD HH:mm:ss')}>
+        <span>{moment().subtract(2, 'days').fromNow()}</span>
+      </Tooltip>
+    ),
+  },
+];
+//评论面板条数
 const CommentList=({comments})=>{
     <List dataSource={comments}
     header={`${comments.length}'条评论'}`}
@@ -17,8 +61,37 @@ const CommentList=({comments})=>{
     renderItem={props=><Comment {...props}/>}/>
 
 }
+/**
+ * tabList 面板Tab页  activeKey：当前默认选中的Tab contentList :
+ * @param {*} param0 
+ */
+const ShopDetail=({tabList,activeKey,contentList})=>{
+  <div>
+    <Row>
+        <Col span={18} push={6}>
+          <Card
+            style={{ width: '100%' }}
+            title="店铺详情"
+            tabList={tabList}
+            activeTabKey={activeKey}
+            onTabChange={(key) => { this.onTabChange(key, 'key'); }}
+            >
+            {contentList[activeKey]}
+          </Card>
+        </Col> 
 
+        <Col span={6} pull={18}>
+        <Carousel autoplay >
+            <div><h3>1</h3></div>
+            <div><h3>2</h3></div>
+            <div><h3>3</h3></div>
+            <div><h3>4</h3></div>
+        </Carousel></Col>
+    </Row>
+  </div>
+}
 
+//评论面板
 const Editor = ({
   onChange, onSubmit, submitting, value,
 }) => (
@@ -39,75 +112,11 @@ const Editor = ({
   </div>
 );
 
-const data = [
-  {
-    actions: [<span>Reply to</span>],
-    author: 'Han Solo',
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    content: (
-      <p>We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.</p>
-    ),
-    datetime: (
-      <Tooltip title={moment().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss')}>
-        <span>{moment().subtract(1, 'days').fromNow()}</span>
-      </Tooltip>
-    ),
-  },
-  {
-    actions: [<span>Reply to</span>],
-    author: 'Han Solo',
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    content: (
-      <p>We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.</p>
-    ),
-    datetime: (
-      <Tooltip title={moment().subtract(2, 'days').format('YYYY-MM-DD HH:mm:ss')}>
-        <span>{moment().subtract(2, 'days').fromNow()}</span>
-      </Tooltip>
-    ),
-  },
-];
-
-
-const tabList = [{
-  key: 'tab1',
-  tab: '介绍',
-}, {
-  key: 'tab2',
-  tab: '上门服务',
-}];
-
-const contentList = {
-  tab1: <p>content1</p>,
-  tab2: <ServiceList/>,
-};
-
-const tabListNoTitle = [{
-  key: 'article',
-  tab: 'article',
-}, {
-  key: 'app',
-  tab: 'app',
-}, {
-  key: 'project',
-  tab: 'project',
-}];
-
-const contentListNoTitle = {
-  article: <p>article content</p>,
-  app: <p>app content</p>,
-  project: <p>project content</p>,
-};
-
-
 
 class DetailPage extends React.Component{
-
     constructor(props){
         super(props);
     }
-
-
     state = {
         likes: 0,
         dislikes: 0,
@@ -198,62 +207,26 @@ handleSubmit = () => {
         return (
             <Layout>
                 <Affix>
-                <Header>
-                <GlobalMenu /> 
-                </Header> 
-                </Affix>               
+                <Header className={styles.menuHeader}>
+                  <img src={require('../../images/menu-logo.svg')} className={classNames(styles.img,'animated flipInX slower')}/>
+                  <GlobalMenu/>
+                </Header>
+                </Affix>
+                                
                 <Content style={{margin:'30px'}}>
-
-                    <p>商家详情页面:</p>
-
-                    <div>
-
-                        <Row>
-                           <Col span={18} push={6}><Card
-                            style={{ width: '100%' }}
-                            title="店铺详情"
-                            extra={<a href="#">More</a>}
-                            tabList={tabList}
-                            activeTabKey={this.state.key}
-                            onTabChange={(key) => { this.onTabChange(key, 'key'); }}
-                            >
-                            {contentList[this.state.key]}
-                        </Card></Col>
-
-                            <Col span={6} pull={18}>
-                            <Carousel autoplay >
-
-                                <div style={{height:'400px',backgroundColor:'#000'}}><h3>1</h3></div>
-                                <div><h3>2</h3></div>
-                                <div><h3>3</h3></div>
-                                <div><h3>4</h3></div>
-                            </Carousel></Col>
-                        </Row>
-                        
-                        
-                    </div>
-                
-                
-                    <Divider>评论区</Divider>
-                    <List
-                        className="comment-list"
-                        header={`${data.length} replies`}
-                        itemLayout="horizontal"
-                        dataSource={data}
-                        renderItem={item => (
-                        <Comment
-                            actions={actions}
-                            author={item.author}
-                            avatar={item.avatar}
-                            content={item.content}
-                            datetime={item.datetime}
-                        />
-                        )}
-                    />,
+                    <ShopDetail tabList={tabList} 
+                                activeKey={this.state.key}
+                                contentList={contentList}/>
+                    <Divider>评论</Divider>
+                    <ServiceList/>
                 </Content>
-                <Footer>
-                    页脚
-                </Footer>
+                <Footer className={styles.indexFooter}>
+                  <GlobalFooter className='global-footer' 
+                    links={[{title:'SpringBoot',key:'1',href:'http://baidu.com'},{
+                    title:'SpringBoot',key:'2',href:'http://baidu.com'
+                    }]}
+                    copyright='@CopyRight · Leesure 河南大学软件学院'/>
+                </Footer> 
             </Layout>
         )
     }

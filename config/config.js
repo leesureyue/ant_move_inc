@@ -12,9 +12,6 @@ export default {
           path:'/',
           component:'./index'
         },{
-            path:'/register',
-            component:'./form/Register'
-        },{
             path:'/shop/detail',
             component:'./user/detail'
         },{

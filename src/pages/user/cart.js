@@ -57,9 +57,11 @@ class CompleteOrder extends React.Component{
       <div className={styles.completeOrder}>
         <img src={require('../../images/orderComplete.png')}  width='150px' className='animated bounceIn'/>
         <span className={styles.completeText}>恭喜你，支付成功</span><br/>
+        <Link to="/">
         <Button  size='large' type='primary' icon='home' className={styles.completeButton}>
-            回到首页
+          回到首页
         </Button>
+        </Link>
         <Button  size='large' type='default' icon='shopping'>查看订单</Button>
       </div>
     )
@@ -130,13 +132,12 @@ class ShoppingCart extends React.Component{
                         current === steps.length - 1
                         && <Button type="primary" onClick={() => message.success('支付成功!')}>完成</Button>
                       }
-        
                   </div>
                 </div>
             </Content>
 
-            <Footer>
-               <GlobalFooter className={styles.indexFooter}
+            <Footer  className={styles.indexFooter}>
+               <GlobalFooter
                   links={[{title:'SpringBoot',key:'1',href:'http://baidu.com'},{
                     title:'SpringBoot',key:'2',href:'http://baidu.com'
                   }]}
