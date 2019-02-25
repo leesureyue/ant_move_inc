@@ -19,6 +19,10 @@ export default {
             component:'./user/cart'
         },
         {
+            path:'/shop/category',
+            component:'./user/category'
+        },
+        {
         path: '/layout',
         component: './layout/BasicLayout',
         routes:[{

@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'umi/link';
 import style from './index.less';
+import cookie from 'react-cookies';
 import * as userService from '../../service/UserService';
 
 import {
@@ -18,12 +19,24 @@ class GlobalMenu extends React.Component{
     }
     state={
       current: '',
+      userName:'登陆',//当前用户的登陆名
       loginVisible:false,
       registerVisible:false
     }
 
 
-    //点击导航栏
+  componentWillMount(){
+    //todo 发送请求，自动登陆,从cookie中取值
+    
+    let user = {name:'lee',password:'123'}
+    if(typeof(user)!="undefined"){
+     this.setState({userName:user.name});
+    }else{//如果没有cookie 下·
+      this.setState({userName:'登陆'});
+    }
+  }
+
+  //点击导航栏
   handleClick = (e) => {
     console.log(e.key);
     this.setState({
@@ -42,6 +55,7 @@ class GlobalMenu extends React.Component{
   showLoginModal=()=>{
     this.setState({loginVisible:true,registerVisible:false})
   }
+  //弹出注册窗口
   showRegisterModal=()=>{
     this.setState({registerVisible:true,loginVisible:false})
   }
@@ -50,7 +64,7 @@ class GlobalMenu extends React.Component{
     const {  form: { validateFields } } = this.props;
     validateFields((err, values) => {
       if (!err) {
-        let response = userService.login(values).then((data)=>{
+          let response = userService.login(values).then((data)=>{
           console.log(data)
         }).catch(()=>{
           console.log("error!",err)
@@ -66,7 +80,8 @@ class GlobalMenu extends React.Component{
     this.setState({loginVisible:false,registerVisible:false})
   }
  
-    render(){
+
+  render(){
         return (
           <div>
             <Modal title={<span><Icon type='user'/>登陆</span>}
@@ -115,7 +130,9 @@ class GlobalMenu extends React.Component{
         onOk={this.handleOK}
         style={{maxWidth:'400px'}}
         onCancel={this.handleCancel}>
-                  //TODO 我是注册页面          
+          <Form style={{maxWidth:'300px'}}>
+
+          </Form>
       </Modal>
 
 
@@ -126,7 +143,8 @@ class GlobalMenu extends React.Component{
           >
 
             <Menu.Item key="login">
-              <Icon type="login" /> 登陆
+              
+              <Icon type="login" /> {this.state.userName}
             </Menu.Item>
             <Menu.Item key="register">
               <Icon type="user" />注册

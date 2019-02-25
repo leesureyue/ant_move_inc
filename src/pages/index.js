@@ -1,8 +1,10 @@
 // 入口文件 ,首页 
-import { Layout,Row, Col ,Rate,Form,Input
-  ,Affix,Card} from 'antd';
+import { 
+  Layout,Row, Col ,Rate,Form,Input,Affix,Card,List,Icon
+} from 'antd';
 import React from 'react';
 import styles from './index.less';
+import Link from 'umi/link';
 import classNames from 'classnames';
 import 'animate.css';
 import GlobalFooter from '../component/GlobalFooter';
@@ -45,28 +47,25 @@ class ExcellentStore extends React.Component{
 
   render(){
     return (
-
       <div>
-        <Row type="flex" justify="space-around">
-              {
-              this.state.cardList.map(card=>{
-                return (
-                  <Col span={4} key={card.id}>
-                  <Card  key={card.id}
-                      hoverable 
+        <List header={<Link to='/shop/detail'><Icon type='user'/>推荐店家</Link>}
+              grid={{gutter:16,column:4}}
+              dataSource={this.state.cardList}
+              renderItem={item=>(
+                <List.Item>
+                  <Card title={item.title} hoverable
                       extra={<a href="#">了解更多</a>}
                       style={{ width: 240 , float:'left',margin:'10px'}}
                       cover={<img alt="example" 
                       src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
                     >
-                    <Rate count={5} disabled value={card.id}/>
+                    <Rate count={5} disabled value={item.id}/>
                     <Meta 
-                      title={card.title}
-                      description={card.description}/>
-                  </Card></Col>)
-              })
-              }
-        </Row>
+                      title={item.title}
+                      description={item.description}/>
+                  </Card>
+                </List.Item>
+              )}/>
       </div>
     )
   }
@@ -136,11 +135,10 @@ class CommonLayout extends React.Component{
           <StepIntroduce/>
           <h2>当前位置：杭州市西湖区</h2>
           <ExcellentStore/> 
-          <p>查看更多</p> 
+           
           <img src={require('../images/index-welcome.png')} className={classNames(styles.img,'animated slideInUp')}/>              
-          
+         
         </Content>
-
         <Footer className={styles.indexFooter}>
             <GlobalFooter className='global-footer' 
             links={[{title:'SpringBoot',key:'1',href:'http://baidu.com'},{

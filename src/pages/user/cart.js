@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import Link from 'umi/link';
 import 'animate.css';
 import {
-    Steps, Button, message,Layout,Affix
+    Steps, Button, message,Layout,Affix,Col,Row
 } from 'antd';
 
 import GlobalMenu from '../../component/GlobalMenu';
@@ -14,59 +14,33 @@ const {Header,Content,Footer} =Layout;
 const Step = Steps.Step;
 
 //确认订单
-class ConfirmOrder extends React.Component{
-  constructor(props){
-    super(props);
-  }
-
-  state={
-
-  }
-
-  render(){
-    console.log(this.props);
-    return (
-      <div>Content One</div>
-    )
-  }
-}
+const ConfirmOrder=(state)=>(
+  <div>
+    
+  </div>
+)
 
 //提交订单，扫描二维码
-class SubmitOrder  extends React.Component{
+const SubmitOrder=({url,totalCount})=>(
+  <div>
+    <img src={url}/>
+    <p>总计:{totalCount}</p>
+    <span>手机扫码，在线支付</span>
+  </div>
+)
 
-  constructor(props){
-    super(props);
-  }
-
-  state={
-
-  }
-   //组建加载的时候出现
-   render(){
-     return (
-       <div>我是提交订单页面</div>
-     )
-   }
-}
-
-
-//支付完成
-class CompleteOrder extends React.Component{
-  render(){
-    return (
-      <div className={styles.completeOrder}>
-        <img src={require('../../images/orderComplete.png')}  width='150px' className='animated bounceIn'/>
-        <span className={styles.completeText}>恭喜你，支付成功</span><br/>
-        <Link to="/">
-        <Button  size='large' type='primary' icon='home' className={styles.completeButton}>
-          回到首页
-        </Button>
-        </Link>
-        <Button  size='large' type='default' icon='shopping'>查看订单</Button>
-      </div>
-    )
-  }
-}
+const CompleteOrder =()=>(
+  <div className={styles.completeOrder}>
+    <img src={require('../../images/orderComplete.png')}  width='150px' className='animated bounceIn'/>
+    <span className={styles.completeText}>恭喜你，支付成功</span><br/>
+    <Link to="/">
+    <Button  size='large' type='primary' icon='home' className={styles.completeButton}>
+      回到首页
+    </Button>
+    </Link>
+    <Button  size='large' type='default' icon='shopping'>查看订单</Button>
+  </div>
+)
 
 const steps = [{
   key:'1',
@@ -75,7 +49,9 @@ const steps = [{
 }, {
   key:'2',
   title: '提交订单',
-  content: <SubmitOrder/>,
+  content: <SubmitOrder 
+                url='http://localhost:8081/getQRCodeImage'
+                totalCount='300$'/>,
 }, {
   key:'3',
   title: '完成支付',

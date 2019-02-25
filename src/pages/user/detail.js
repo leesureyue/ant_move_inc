@@ -58,22 +58,32 @@ const CommentList=({comments})=>{
 }
 /**
  * 商品介绍面板
+ * todo 包含商店的介绍
+ * 商品的评级
  */
 const ShopIntroduce=()=>(
   <div>
+    <h2>我是商店名称</h2>
+    
     Content One 
   </div>
 )
 
 /**
- * 商品在线预定
+ * 服务在线预定
  * @param {} param0 
  */
-const ShopOnLineOrder=()=>(
-  <div>
-    Content Two
-  </div>
-)
+const ShopOnLineOrder=({dataList})=>{
+  
+  return (
+    <div>
+      <List
+        dataSource={dataList.data}
+        
+        />
+    </div>
+  )
+}
 
 const contentList = {
   tab1: <ShopIntroduce/>,
