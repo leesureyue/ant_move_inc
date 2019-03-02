@@ -90,11 +90,10 @@ const ShopIntroduce=({shopDetail})=>{
       <Skeleton active loading title/>
     )
   }else{
-    console.log(shopDetail.id);
     return (
       <div>
         <h2>{shopDetail.title}</h2>
-        <span>商店评级</span><Rate defaultValue={shopDetail.rate} disabled/>
+        <span>商店评级:</span><Rate defaultValue={shopDetail.rate} disabled/>
         <p>地址：{shopDetail.address}</p>
         <p>电话：{shopDetail.phone}</p>
       </div>
@@ -161,7 +160,6 @@ class DetailPage extends React.Component{
     });
   }
     render(){
-      console.log("this.render",this.state.shopDetail)
       return (
         <Layout>
           <Affix>
