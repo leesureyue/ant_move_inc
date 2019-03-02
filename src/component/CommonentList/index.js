@@ -3,12 +3,12 @@ import reqwest from 'reqwest';
 import {
     List, Avatar, Button, Skeleton,
 } from 'antd';
-
+import style from './index.less';
 
 const count = 3;
 const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat&noinfo`;
-//留言板
-class ServiceList extends React.Component{
+//留言面板
+class CommonentList extends React.Component{
     constructor(props){
         super(props);
     }
@@ -43,7 +43,9 @@ class ServiceList extends React.Component{
  onLoadMore = () => {
     this.setState({
       loading: true,
-      list: this.state.data.concat([...new Array(count)].map(() => ({ loading: true, name: {} }))),
+      list: this.state.data.concat([...new Array(count)]
+              .map(() =>
+          ({ loading: true, name: {} }))),
     });
     this.getData((res) => {
       const data = this.state.data.concat(res.results);
@@ -76,14 +78,13 @@ class ServiceList extends React.Component{
         loadMore={loadMore}
         dataSource={list}
         renderItem={item => (
-          <List.Item actions={[<a>edit</a>, <a>more</a>]}>
+          <List.Item>
             <Skeleton avatar title={false} loading={item.loading} active>
               <List.Item.Meta
                 avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                 title={<a href="https://ant.design">{item.name.last}</a>}
                 description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-              />
-              <div>content</div>
+              /> 
             </Skeleton>
           </List.Item>
         )}
@@ -92,4 +93,4 @@ class ServiceList extends React.Component{
     }
 }
 
-export default ServiceList;
+export default CommonentList;

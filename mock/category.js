@@ -6,7 +6,8 @@ let data={
     isExcellent:'',
     serviceList: [],
     phone:'18236551812',
-    imageUrls:'/src/images/need-helps.png'
+    imageUrls:'/src/images/need-helps.png',
+    address:'浙江省杭州市西湖区飞天园区'
 }
 
 
