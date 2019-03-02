@@ -12,6 +12,10 @@ export default {
           path:'/',
           component:'./index'
         },{
+            path:'/test',
+            component:'./test.js'
+        },
+        {
             path:'/shop/detail',
             component:'./user/detail'
         },{

@@ -7,6 +7,8 @@ import { Layout,Icon ,Carousel,Divider
   ,Button,Affix,Input,Card,Tooltip,Row,Col} from 'antd';
   
 import moment from 'moment';
+import reqwest from 'reqwest';
+
 import { Comment, Form, List} from 'antd'
 import ServiceList from '../../component/ServiceList';
 const {Header,Footer,Content} =Layout;
@@ -79,22 +81,29 @@ const ShopOnLineOrder=({dataList})=>{
     <div>
       <List
         dataSource={dataList.data}
-        
+        renderItem={item=>(
+          <List.Item key={item.id}>
+            <List.Item.Meta title={item.title} description={item.description}/>
+
+            <a href={`/shop/cart?id=${item.id}`}><Button icon='dollar'>预定</Button></a>
+          </List.Item>
+        )}
         />
     </div>
   )
 }
 
-const contentList = {
-  tab1: <ShopIntroduce/>,
-  tab2: <ShopOnLineOrder/>,
+const ContentList =({dataList,activeKey})=> {
+  return (<div>
+    {activeKey ==='tab1'?<ShopIntroduce/>:<ShopOnLineOrder dataList={dataList}/>}
+  </div>)
 };
 /**
  * 商品详情Tab展示以及轮播图
  * tabList 面板Tab页  activeKey：当前默认选中的Tab contentList :
  * @param {*} param0 
  */
-const ShopDetail=({tabList,activeKey,contentList,onChange})=>(
+const ShopDetail=({tabList,activeKey,dataList,onChange})=>(
   <div>
     <Row>
         <Col span={18} push={6}>
@@ -105,7 +114,7 @@ const ShopDetail=({tabList,activeKey,contentList,onChange})=>(
             activeTabKey={activeKey}
             onTabChange={onChange}
             >
-            {contentList[activeKey]}
+            <ContentList activeKey={activeKey} dataList={dataList}/>
           </Card>
         </Col> 
 
@@ -152,6 +161,19 @@ class DetailPage extends React.Component{
         action: 'disliked',
         key: 'tab1',
         noTitleKey: 'app',
+        dataList:{
+          data:[{id:1,title:'title1',description:'description1'}]
+        }
+    }
+
+    componentWillMount(){
+      reqwest({
+        url:'/shop/detail',
+        method:'post',
+        data:{id:1}
+      }).then(response=>{
+         this.setState({shopDetail:response.data})
+      })
     }
 
   like = () => {
@@ -161,7 +183,8 @@ class DetailPage extends React.Component{
       action: 'liked',
     });
   }
-  onTabChange = (key, type) => {
+  onTabChange = (key) => {
+    
     this.setState({ key:key});
   }
 
@@ -205,6 +228,7 @@ handleSubmit = () => {
     });
   }
     render(){
+      console.log(this.state)
         const actions = [
             <span>
                 <Tooltip title="Like">
@@ -244,8 +268,9 @@ handleSubmit = () => {
                 <Content style={{margin:'30px'}}>
                     <ShopDetail tabList={tabList} 
                                 activeKey={this.state.key}
-                                contentList={contentList}
+                                dataList={this.state.dataList}
                                 onChange={this.onTabChange}/>
+                                
                     <Divider>评论</Divider>
                     <ServiceList/>
                 </Content>

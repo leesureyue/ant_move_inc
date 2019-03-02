@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import Link from 'umi/link';
 import 'animate.css';
 import {
-    Steps, Button, message,Layout,Affix,Col,Row
+    Steps, Button, Icon,Layout,Affix,Col,Row
 } from 'antd';
 
 import GlobalMenu from '../../component/GlobalMenu';
@@ -93,21 +93,18 @@ class ShoppingCart extends React.Component{
                     <div className={styles.content}>{steps[current].content}</div>
                     <div className={styles.stepsAction}>
                       {
-                        current > 0
+                        current > 0 && current< steps.length-1
                         && (
-                        <Button style={{marginRight:'8px'}} onClick={() => this.prev()}>
+                        <Button icon='left' style={{marginRight:'8px'}} onClick={() => this.prev()}>
                           上一步
                         </Button>
                         )
                       }
                       {
                         current < steps.length - 1
-                        && <Button type="primary" onClick={() => this.next()}>下一步</Button>
-                      }
-                      {
-                        current === steps.length - 1
-                        && <Button type="primary" onClick={() => message.success('支付成功!')}>完成</Button>
-                      }
+                        && <Button type="primary" onClick={() => this.next()}>
+                        下一步<Icon type='right'/></Button>
+                      } 
                   </div>
                 </div>
             </Content>

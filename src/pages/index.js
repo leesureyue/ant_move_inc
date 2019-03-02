@@ -119,7 +119,9 @@ class CommonLayout extends React.Component{
       <Layout>
         <Affix>
         <Header className={styles.menuHeader}>
+        <a href='/'>
             <img src={require('../images/menu-logo.svg')} className={classNames(styles.img,'animated flipInX slower')}/>
+        </a>
             <GlobalMenu/>
           </Header></Affix>
         <Content className={styles.indexContent}>

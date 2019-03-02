@@ -1,8 +1,10 @@
 let user={
     name:'lee',
-    password:'123'
+    password:'123',
+    role:'user'
 }
-//moke data 
+
+//ajax 
 export default {
     'post /login':function(req,res,next){
         res.json({result:user})

@@ -9,12 +9,9 @@ const count = 3;
 const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat&noinfo`;
 //留言板
 class ServiceList extends React.Component{
-
-
     constructor(props){
         super(props);
     }
-
     state = {
         initLoading: true,
         loading: false,
