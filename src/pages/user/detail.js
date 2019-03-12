@@ -24,16 +24,18 @@ const tabList = [{
  * 服务在线预定
  * @param {} param0 
  */
-const ShopOnLineOrder=({dataList})=>{
+const ShopOnLineOrder=({dataList,onClick})=>{
   return (
     <div>
       <List
-        dataSource={dataList.data}
+        dataSource={dataList}
         renderItem={item=>(
           <List.Item key={item.id}>
-            <List.Item.Meta title={item.title} description={item.description}/>
-
-            <a href={`/shop/cart?id=${item.id}`}><Button icon='dollar'>预定</Button></a>
+            <List.Item.Meta title={item.title} 
+            description={item.description}/>
+            <Button icon='dollar' onClick={onClick}>预定</Button>
+            
+            <p>价格：{item.price}</p>
           </List.Item>
         )}
         />
@@ -41,10 +43,10 @@ const ShopOnLineOrder=({dataList})=>{
   )
 }
 
-const ContentList =({dataList,activeKey})=> {
+const ContentList =({dataList,activeKey,onClick})=> {
   return (<div>
     {activeKey ==='tab1'?<ShopIntroduce shopDetail={dataList}/>
-        :<ShopOnLineOrder dataList={dataList.serviceList}/>}
+        :<ShopOnLineOrder dataList={dataList.serviceList} onClick={onClick}/>}
   </div>)
 };
 
@@ -53,7 +55,7 @@ const ContentList =({dataList,activeKey})=> {
  * tabList 面板Tab页  activeKey：当前默认选中的Tab contentList :
  * @param {*} param0 
  */
-const ShopDetail=({tabList,activeKey,shopDetail,onChange})=>(
+const ShopDetail=({tabList,activeKey,shopDetail,onChange,onClick})=>(
   <div>
     <Row>
         <Col span={18} push={6}>
@@ -64,7 +66,8 @@ const ShopDetail=({tabList,activeKey,shopDetail,onChange})=>(
             activeTabKey={activeKey}
             onTabChange={onChange}
             >
-            <ContentList activeKey={activeKey} dataList={shopDetail}/>
+            <ContentList  activeKey={activeKey} dataList={shopDetail} 
+                          onClick={onClick}/>
           </Card>
         </Col> 
 
@@ -121,7 +124,6 @@ class DetailPage extends React.Component{
       }).then(response=>{
          this.setState({shopDetail:response.data})
       })
-     
     }
 
   
@@ -159,6 +161,9 @@ class DetailPage extends React.Component{
       value: e.target.value,
     });
   }
+  onClick=()=>{
+    this.props.history.push({pathname:'/shop/cart',state:{id:1}})
+  }
     render(){
       return (
         <Layout>
@@ -174,6 +179,7 @@ class DetailPage extends React.Component{
                         activeKey={this.state.key}
                         shopDetail={this.state.shopDetail}
                         dataList={this.state.dataList}
+                        onClick={this.onClick}
                         onChange={this.onTabChange}/>
                         
             <Divider>评论</Divider>

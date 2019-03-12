@@ -71,12 +71,13 @@ class ShoppingCart extends React.Component{
         this.setState({ current });
       }
       
-      prev() {
-        const current = this.state.current - 1;
-        this.setState({ current });
-      }
+    prev() {
+      const current = this.state.current - 1;
+      this.setState({ current });
+    }
       
     render(){
+      console.log(this.props);
         const {current} =this.state;
         return (
           <Layout>
