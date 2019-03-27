@@ -69,7 +69,6 @@ class GlobalMenu extends React.Component{
   //弹出注册窗口
   showRegisterModal=()=>{
     this.setState({registerVisible:true,loginVisible:false})
-
   }
   //点击确定
   handleOK=()=>{
