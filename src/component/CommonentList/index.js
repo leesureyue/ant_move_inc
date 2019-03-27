@@ -5,8 +5,6 @@ import {
 } from 'antd';
 import style from './index.less';
 
-const count = 3;
-const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat&noinfo`;
 //留言面板
 class CommonentList extends React.Component{
     constructor(props){
@@ -21,17 +19,18 @@ class CommonentList extends React.Component{
 
     componentDidMount() {
     this.getData((res) => {
+      console.log(res)
       this.setState({
         initLoading: false,
-        data: res.results,
-        list: res.results,
+        data: res.data,
+        list: res.data,
       });
     });
   }
 
   getData = (callback) => {
     reqwest({
-      url: fakeDataUrl,
+      url: "/shop/getEvaluateList",
       type: 'json',
       method: 'get',
       contentType: 'application/json',
@@ -48,7 +47,8 @@ class CommonentList extends React.Component{
           ({ loading: true, name: {} }))),
     });
     this.getData((res) => {
-      const data = this.state.data.concat(res.results);
+      const data = this.state.data.concat(res.data);
+      console.log(data)
       this.setState({
         data,
         list: data,
@@ -66,13 +66,13 @@ class CommonentList extends React.Component{
         textAlign: 'center', marginTop: 12, height: 32, lineHeight: '32px',
       }}
       >
-        <Button onClick={this.onLoadMore}>loading more</Button>
+        <Button onClick={this.onLoadMore}>查看更多</Button>
       </div>
     ) : null;
 
     return (
       <List
-        className="demo-loadmore-list"
+        className="loadmore-list"
         loading={initLoading}
         itemLayout="horizontal"
         loadMore={loadMore}
@@ -82,8 +82,8 @@ class CommonentList extends React.Component{
             <Skeleton avatar title={false} loading={item.loading} active>
               <List.Item.Meta
                 avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                title={<a href="https://ant.design">{item.name.last}</a>}
-                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                title={<span>{item.userName}</span>}
+                description={item.info}
               /> 
             </Skeleton>
           </List.Item>
