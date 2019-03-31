@@ -7,30 +7,32 @@ export function isUrl(path) {
 
 const menuData = [
   {
-    name: 'Pages',
+    name: '商店管理',
     icon: 'dashboard',
-    path: 'dashboard',
+    path: '/layout/dashboard',
     children: [
       {
-        name: '分析页',
+        name: '服务管理',
         path: 'analysis',
       },
       {
-        name: '监控页',
+        name: '订单管理',
         path: 'monitor',
       },
       {
-        name: '工作台',
-        path: 'workplace',
-        // hideInBreadcrumb: true,
-        // hideInMenu: true,
+        name: '评价管理',
+        path: 'workplace', 
       },
     ],
   },
   {
-    name: 'typescript',
+    name: '数据分析',
     icon: 'dashboard',
-    path: 'typescript',
+    path: '',
+  },{
+    name:'店铺信息',
+    icon:'shop',
+    path:''
   }
 ];
 

@@ -4,7 +4,9 @@ import {
 } from 'antd';
 import React from 'react';
 import styles from './index.less';
-import Link from 'umi/link';
+import reqwest from 'reqwest';
+import {withRouter} from 'react-router';
+import { Link } from 'dva/router';
 import classNames from 'classnames';
 import 'animate.css';
 import GlobalFooter from '../component/GlobalFooter';
@@ -14,59 +16,35 @@ const { Header, Footer, Content } = Layout;
 const {Meta} =Card;
 
 //推荐店家面板
+@withRouter
 class ExcellentStore extends React.Component{
-  state={
-    cardList:[{
-      id:1,
-      title:'title',
-      description: 'description'
-    },{
-      id:2,
-      title:'title',
-      description:'description'
-    },{
-      id:3,
-      title:'title',
-      description:'descript'
-    },{
-      id:4,
-      title:'title',
-      description:'description'
-    }],
-    pageHeight:''
+  
+    constructor(props){
+    super(props); 
   }
 
-  componentWillMount(){
-
-    //todo send request 
-  }
-
-  constructor(props){
-    super(props);
-  }
-
+  state={loading:false}
   render(){
     return (
-      <div>
-        <List header={<Link to='/shop/detail'><Icon type='user'/>推荐店家</Link>}
-              grid={{gutter:16,column:4}}
-              dataSource={this.state.cardList}
-              renderItem={item=>(
-                <List.Item>
-                  <Card title={item.title} hoverable
-                      extra={<a href="#">了解更多</a>}
-                      style={{ width: 240 , float:'left',margin:'10px'}}
-                      cover={<img alt="example" 
-                      src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                    >
-                    <Rate count={5} disabled value={item.id}/>
-                    <Meta 
-                      title={item.title}
-                      description={item.description}/>
-                  </Card>
-                </List.Item>
-              )}/>
-      </div>
+      <List
+        grid={{gutter:16,column:4}}
+        dataSource={this.props.shopList}
+        renderItem={item=>(
+          <List.Item>
+            <Card title={item.shopTitle} hoverable
+                loading={this.props.shopList.length==0?true:false}
+                extra={<Link to={{pathname:'/shop/detail',state:{id:item.shopId}}}>了解更多</Link>}
+                style={{ width: 240 , float:'left',margin:'10px'}}
+                cover={<img alt="example" 
+                src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+              >
+              <Rate count={5} disabled value={item.rate}/>
+              <Meta 
+                title={item.shopTitle}
+                description={item.shopIntroduce}/>
+            </Card>
+          </List.Item>
+        )}/>
     )
   }
 }
@@ -112,41 +90,45 @@ class CommonLayout extends React.Component{
     current: '',
     visible:false,
     registerVisible:false,
+    shopList:[]
+  }
+  getShopList=(param)=>{
+    reqwest({
+      url:'/shop/queryByConditions',
+      method:'post',
+      data:{address:param,name:param}
+    }).then(response=>{
+      this.setState({shopList:response.data})
+    })
+  }
+  componentWillMount(){
+     this.getShopList('_');
   }
   render(){
     return (
       <div>
       <Layout>
         <Affix>
-        <Header className={styles.menuHeader}>
-        <a href='/'>
-            <img src={require('../images/menu-logo.svg')} className={classNames(styles.img,'animated flipInX slower')}/>
-        </a>
-            <GlobalMenu/>
-          </Header></Affix>
-        <Content className={styles.indexContent}>
-            
+          <Header className={styles.menuHeader}>
+             <GlobalMenu/>
+          </Header>
+        </Affix>
+
+        <Content className={styles.indexContent}> 
               <h1 className ='animated zoomIn'> Welcome to Ant Moving </h1>
               <h2 className='animated fadeIn slower'> 
                   this is a site platform for  houseing   moving </h2>
+              <h2>当前位置：杭州市西湖区</h2>
               <Input.Search placeholder='请输入附近的店家'  
-                            onSearch={value=>{console.log(value)}}
+                            onSearch={value=>{this.getShopList(value)}}
                             size='large' enterButton
                             className={styles.contentInput}/>
-
-          <StepIntroduce/>
-          <h2>当前位置：杭州市西湖区</h2>
-          <ExcellentStore/> 
-           
+          <ExcellentStore shopList={this.state.shopList}/> 
           <img src={require('../images/index-welcome.png')} className={classNames(styles.img,'animated slideInUp')}/>              
-         
+          <StepIntroduce/>
         </Content>
         <Footer className={styles.indexFooter}>
-            <GlobalFooter className='global-footer' 
-            links={[{title:'SpringBoot',key:'1',href:'http://baidu.com'},{
-              title:'SpringBoot',key:'2',href:'http://baidu.com'
-            }]}
-            copyright='@CopyRight · Leesure 河南大学软件学院'/>
+            <GlobalFooter/>
         </Footer>
       </Layout>
       </div>

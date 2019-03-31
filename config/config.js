@@ -12,14 +12,18 @@ export default {
           path:'/',
           component:'./index'
         },{
-            path:'/test',
-            component:'./test.js'
+          path:'/user/order',
+          component:'./user/orderlist'
+        },
+        {
+          path:'/user/info',
+          component:'./user/userinfo'
         },
         {
             path:'/shop/detail',
             component:'./user/detail'
         },{
-            path:'./shop/cart',
+            path:'/shop/cart',
             component:'./user/cart'
         },
         {

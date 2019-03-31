@@ -26,5 +26,18 @@ const GlobalFooter = ({ className, links, copyright }) => {
     );
   };
   
-
-export default GlobalFooter;
+class GlobalFooterWrapper extends React.Component{
+  
+  render(){
+    const links=[{title:'SpringBoot',key:'1',href:'http://baidu.com'},{
+    title:'SpringBoot',key:'2',href:'http://baidu.com'
+    }];
+    return(
+      <GlobalFooter 
+      className='global-footer' 
+      links={links}
+      copyright='@CopyRight · Leesure 河南大学软件学院'/>
+    )
+  }
+}
+export default GlobalFooterWrapper;

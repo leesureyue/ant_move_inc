@@ -6,7 +6,6 @@ import 'animate.css';
 import {
     Steps, Button, Icon,Layout,Affix,Col,Row
 } from 'antd';
-
 import GlobalMenu from '../../component/GlobalMenu';
 import GlobalFooter from '../../component/GlobalFooter';
 
@@ -14,17 +13,23 @@ const {Header,Content,Footer} =Layout;
 const Step = Steps.Step;
 
 //确认订单
-const ConfirmOrder=(state)=>(
-  <div>
-    
-  </div>
-)
+const ConfirmOrder=({order})=>{
+  console.log(order);
+  
+  return (
+    <div>
+      <p>订单号：{order.id}</p>
+      <p>服务id号：{order.shopId}</p>
+      <p>价格：{order.price}</p>
+    </div>
+  )
+}
 
 //提交订单，扫描二维码
-const SubmitOrder=({url,totalCount})=>(
+const SubmitOrder=({price})=>(
   <div>
-    <img src={url}/>
-    <p>总计:{totalCount}</p>
+     
+    <p>总计:{price}元</p>
     <span>手机扫码，在线支付</span>
   </div>
 )
@@ -42,22 +47,7 @@ const CompleteOrder =()=>(
   </div>
 )
 
-const steps = [{
-  key:'1',
-  title: '确认订单',
-  content: <ConfirmOrder/>,
-}, {
-  key:'2',
-  title: '提交订单',
-  content: <SubmitOrder 
-                url='http://localhost:8081/getQRCodeImage'
-                totalCount='300$'/>,
-}, {
-  key:'3',
-  title: '完成支付',
-  content: <CompleteOrder/>,
-}];
-
+//输出界面
 class ShoppingCart extends React.Component{
     constructor(props){
         super(props);
@@ -77,7 +67,22 @@ class ShoppingCart extends React.Component{
     }
       
     render(){
-      console.log(this.props);
+        console.log(this.props.location.state)
+        const steps = [{
+          key:'1',
+          title: '确认订单',
+          content: <ConfirmOrder order={this.props.location.state}/>,
+        }, {
+          key:'2',
+          title: '提交订单',
+          content: <SubmitOrder 
+                        price={this.props.location.state.price}/>,
+        }, {
+          key:'3',
+          title: '完成支付',
+          content: <CompleteOrder/>,
+        }];
+
         const {current} =this.state;
         return (
           <Layout>
@@ -89,9 +94,12 @@ class ShoppingCart extends React.Component{
             <Content className={styles.stepContent}>
               <div>
                   <Steps current={current}>
-                    {steps.map(item => <Step key={item.key} title={item.title} />)}
+                    {steps.map(item => 
+                        <Step key={item.key} title={item.title} />)
+                    }
                   </Steps>
                     <div className={styles.content}>{steps[current].content}</div>
+
                     <div className={styles.stepsAction}>
                       {
                         current > 0 && current< steps.length-1

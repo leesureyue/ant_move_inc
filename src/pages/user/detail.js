@@ -5,30 +5,37 @@ import styles from '../index.less';
 import classNames from 'classnames';
 import { Layout,Rate ,Carousel,Divider,List
   ,Button,Affix,Tabs,Card,Skeleton,Row,Col} from 'antd';
-  
-import moment from 'moment';
+import {withRouter} from 'react-router';
 import reqwest from 'reqwest';
 import CommonentList from '../../component/CommonentList';
 
 const {Header,Footer,Content} =Layout;
 
 
-const ShopOnLineOrder =({dataSource})=> { 
+@withRouter
+class ShopOnLineOrder extends React.Component {
+  onClick=(value)=>{
+     this.props.history.push(
+       {pathname:'/shop/cart',state:value}
+    )
+  }
+  render(){
     return (
-      <div>
-        <List
-          dataSource={dataSource}
-          renderItem={item=>(
-            <List.Item key={item.id}>
-              <List.Item.Meta title={item.title} 
-              description={item.desc}/>
-              <Button icon='dollar'>预定</Button>
-              <p>价格：{item.price}</p>
-            </List.Item>
-        )}
-      />
-    </div>
-  )
+    <div>
+    <List
+      dataSource={this.props.dataSource}
+      renderItem={item=>(
+      <List.Item key={item.id}>
+        <List.Item.Meta title={item.title} 
+        description={item.desc}/>
+        <p>价格：{item.price}元</p>
+        <Button icon='dollar' 
+        onClick={()=>this.onClick(item)}>预定</Button>
+      </List.Item>
+  )}
+  />
+  </div>)
+  }
 }
 
 /**
@@ -41,7 +48,7 @@ const ShopIntroduce=({shopDetail})=>{
     return (
       <div>
         <h2>{shopDetail.title}</h2>
-        <span>商店评级:</span><Rate defaultValue={shopDetail.rate} disabled/>
+        <span>商店评级:</span><Rate defaultValue={0} value={shopDetail.rate} disabled/>
         <p>商店简介：{shopDetail.desc}</p>
         <p>地址：{shopDetail.address}</p>
         <p>电话：{shopDetail.phone}</p>
@@ -94,14 +101,14 @@ class DetailPage extends React.Component{
       reqwest({
         url:'/shop/getShopDetail',
         method:'post',
-        data:{shopId:2019032261}
+        data:{shopId:this.props.location.state.id}
       }).then(response=>{
-        console.log(response);
         this.setState({shopDetail:response.data})
       })
     }
 
     render(){
+      
       return (
         <Layout>
           <Affix>
@@ -112,9 +119,10 @@ class DetailPage extends React.Component{
           </Affix>
                                 
         <Content>
-            <ShopDetail shopDetail={this.state.shopDetail}/> 
+            <ShopDetail shopDetail={this.state.shopDetail}/>
+            
             <Divider>评论</Divider>
-            <CommonentList/>
+            <CommonentList shopId={this.props.location.state.id}/>
         </Content>
           <Footer className={styles.indexFooter}>
             <GlobalFooter className='global-footer' 
