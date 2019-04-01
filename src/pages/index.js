@@ -106,32 +106,27 @@ class CommonLayout extends React.Component{
   }
   render(){
     return (
-      <div>
-      <Layout>
+      <Layout className={styles.indexLayout}>
         <Affix>
-          <Header className={styles.menuHeader}>
-             <GlobalMenu/>
-          </Header>
+          <GlobalMenu classNames={styles.menuHeader}/>
         </Affix>
 
-        <Content className={styles.indexContent}> 
-              <h1 className ='animated zoomIn'> Welcome to Ant Moving </h1>
-              <h2 className='animated fadeIn slower'> 
-                  this is a site platform for  houseing   moving </h2>
-              <h2>当前位置：杭州市西湖区</h2>
-              <Input.Search placeholder='请输入附近的店家'  
-                            onSearch={value=>{this.getShopList(value)}}
-                            size='large' enterButton
-                            className={styles.contentInput}/>
-          <ExcellentStore shopList={this.state.shopList}/> 
-          <img src={require('../images/index-welcome.png')} className={classNames(styles.img,'animated slideInUp')}/>              
-          <StepIntroduce/>
-        </Content>
-        <Footer className={styles.indexFooter}>
-            <GlobalFooter/>
-        </Footer>
+        <Content className={styles.indexContent}>
+            <h1 className ='animated zoomIn'> Welcome to Ant Moving </h1>
+            <h2 className='animated fadeIn slower'> 
+                this is a site platform for  houseing   moving </h2>
+            <h2>当前位置：杭州市西湖区</h2>
+            <Input.Search placeholder='请输入附近的店家'  
+                          onSearch={value=>{this.getShopList(value)}}
+                          size='large' enterButton
+                          className={styles.contentInput}/>
+            <ExcellentStore shopList={this.state.shopList}/>
+            <StepIntroduce/>
+            <img src={require('../images/index-welcome.png')} 
+            className={classNames(styles.img,'animated slideInUp')}/>
+          </Content>
+        <GlobalFooter/>
       </Layout>
-      </div>
     );
   }
 }

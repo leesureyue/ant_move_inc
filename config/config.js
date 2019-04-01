@@ -35,13 +35,15 @@ export default {
         component: './layout/BasicLayout',
         routes:[{
             path:'/layout',
-            component:'./dashboard/Analysis'
+            component:'./dashboard/ShopInfo'
             },{
             path:'dashboard',
             routes:[
-                {path:'analysis',component:'./dashboard/Analysis'},
-                {path:'monitor',component:'./dashboard/Monitor'},
-                {path:'workplace',component:'./dashboard/Workplace'}
+              {path:'service',component:'./dashboard/ServiceManager'},
+              {path:'evaluate',component:'./dashboard/EvaluateManager'},
+              {path:'order',component:'./dashboard/OrderManager'},
+              {path:'analysis',component:'./dashboard/Analysis'},
+              {path:'info',component:'./dashboard/ShopInfo'}
             ]
         }]
       }]

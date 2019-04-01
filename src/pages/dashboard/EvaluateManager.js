@@ -1,57 +1,48 @@
 import React from 'React';
-import {Table} from 'antd';
+import {Table,Divider} from 'antd';
 import reqwest from 'reqwest';
 
-//订单管理表格
-class OrderTable extends React.Component{
+//评论管理表格
+class EvaluateTable extends React.Component{
   constructor(props){
     super(props);
     this.state={
       page:1,
       pageSize:10,
       list:[],
-      loading:true,
-      pagination:{}
+      loading:false,
+      pagination:{
+        current:1,total:10
+      }
     }
   }
   componentWillMount(){
     reqwest({
-      url:'/admin/getOrderList',
+      url:'/shop/getEvaluateList',
       method:'get',
       data:{shopId:'',page:this.state.page,pageSize:this.state.pageSize}
     }).then(req=>{
-      console.log(req.data)   
+      console.log(req.data)
       this.setState({page:this.state.page,
-        list:req.data,loading:!req.success,
-        pagination:{current:req.current,total:req.totalCount}
-      })
+        list:req.data,loading:!req.success})
     })
   }
   render(){
     const column=[{
       title:'订单号',
-      dataIndex:'id',
+      dataIndex:'orderId',
     },{
-      title:'用户ID',
-      dataIndex:'userId'
-    },{
-      title:'服务名称',
-      dataIndex:'serviceId'
-    },{
-      title:'服务地址',
-      dataIndex:'address'
-    },{
-      title:'运送目的地',
-      dataIndex:'destination',
+      title:'昵称',
+      dataIndex:'userName'
     },{
       title:'创建时间',
-      dataIndex:'createTime'
+      dataIndex:'createTime',
     },{
-      title:'总价',
-      dataIndex:'totalPay'
+      title:'好评级别',
+      dataIndex:'rate'
     },{
-      title:'订单状态',
-      dataIndex:'orderState'
+      title:'评价内容',
+      dataIndex:'info'
     },{
       title:'操作',
       render:(record)=>{
@@ -65,18 +56,15 @@ class OrderTable extends React.Component{
 
 
     return (
-    <div>
-      <h2>订单管理</h2>
-      <Table title={()=>'商店订单表'} bordered 
+      <Table title={()=>'用户评价表'} bordered 
         columns={column}
         loading={this.state.loading}
         rowKey='id'
         pagination={this.state.pagination}
         dataSource={this.state.list}/>
-    </div>
     )
   }
 }
 
 
-export default OrderTable;
+export default EvaluateTable;

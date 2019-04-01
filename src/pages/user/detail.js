@@ -1,7 +1,7 @@
 import React from 'react';
 import GlobalMenu from '../../component/GlobalMenu';
 import GlobalFooter from '../../component/GlobalFooter';
-import styles from '../index.less';
+import styles from './detail.less';
 import classNames from 'classnames';
 import { Layout,Rate ,Carousel,Divider,List
   ,Button,Affix,Tabs,Card,Skeleton,Row,Col} from 'antd';
@@ -65,9 +65,9 @@ class ShopDetail extends React.Component{
 
   render(){
     return (
-      <Row>
+      <Row className={styles.shopDetail}>
         <Col span={8}>
-          <Carousel autoplay>
+          <Carousel autoplay className={styles.shopCarousel}>
             <div><h3>1</h3></div>
             <div><h3>2</h3></div>
             <div><h3>3</h3></div>
@@ -75,7 +75,7 @@ class ShopDetail extends React.Component{
           </Carousel>
         </Col>
         <Col span={16}>
-          <Tabs>
+          <Tabs className={styles.shopIntroduce}>
             <Tabs.TabPane tab="介绍" key="introduce">
               <ShopIntroduce shopDetail={this.props.shopDetail}/>
             </Tabs.TabPane>
@@ -112,25 +112,14 @@ class DetailPage extends React.Component{
       return (
         <Layout>
           <Affix>
-            <Header className={styles.menuHeader}>
-              <img src={require('../../images/menu-logo.svg')} className={classNames(styles.img,'animated flipInX slower')}/>
-              <GlobalMenu/>
-            </Header>
-          </Affix>
-                                
-        <Content>
+            <GlobalMenu/>
+          </Affix>             
+        <Content style={{padding:'40px'}}>
             <ShopDetail shopDetail={this.state.shopDetail}/>
-            
             <Divider>评论</Divider>
             <CommonentList shopId={this.props.location.state.id}/>
         </Content>
-          <Footer className={styles.indexFooter}>
-            <GlobalFooter className='global-footer' 
-              links={[{title:'SpringBoot',key:'1',href:'http://baidu.com'},{
-              title:'SpringBoot',key:'2',href:'http://baidu.com'
-              }]}
-              copyright='@CopyRight · Leesure 河南大学软件学院'/>
-          </Footer> 
+           <GlobalFooter/>
       </Layout>
         )
     }

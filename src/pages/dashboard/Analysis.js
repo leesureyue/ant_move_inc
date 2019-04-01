@@ -17,7 +17,6 @@ class PuzzleCardsPage extends Component {
     pagination:{
       current:2,
       total:30,
-      
     }
   }
   columns=[{

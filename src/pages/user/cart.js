@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../index.less';
+import styles from './cart.less';
 import classNames from 'classnames';
 import Link from 'umi/link';
 import 'animate.css';
@@ -14,7 +14,6 @@ const Step = Steps.Step;
 
 //确认订单
 const ConfirmOrder=({order})=>{
-  console.log(order);
   
   return (
     <div>
@@ -87,10 +86,8 @@ class ShoppingCart extends React.Component{
         return (
           <Layout>
               <Affix>
-              <Header className={styles.menuHeader}>
-                  <img src={require('../../images/menu-logo.svg')} className={classNames(styles.img,'animated flipInX slower')}/>
-                  <GlobalMenu/>
-          </Header></Affix>
+              <GlobalMenu/>
+              </Affix>
             <Content className={styles.stepContent}>
               <div>
                   <Steps current={current}>
@@ -118,14 +115,7 @@ class ShoppingCart extends React.Component{
                 </div>
             </Content>
 
-            <Footer  className={styles.indexFooter}>
-               <GlobalFooter
-                  links={[{title:'SpringBoot',key:'1',href:'http://baidu.com'},{
-                    title:'SpringBoot',key:'2',href:'http://baidu.com'
-                  }]}
-              copyright='@CopyRight · Leesure 河南大学软件学院'/>
-            </Footer>
-
+             <GlobalFooter/>
           </Layout>
         )
     }

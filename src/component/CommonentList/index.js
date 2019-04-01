@@ -3,7 +3,7 @@ import reqwest from 'reqwest';
 import {
     List, Avatar, Button, Skeleton,message
 } from 'antd';
-import style from './index.less';
+import styles from './index.less';
 
 //留言面板
 class CommonentList extends React.Component{
@@ -73,13 +73,13 @@ class CommonentList extends React.Component{
         textAlign: 'center', marginTop: 12, height: 32, lineHeight: '32px',
       }}
       >
-        <Button onClick={this.onLoadMore}>查看更多</Button>
+        <Button  size='small' onClick={this.onLoadMore}>查看更多</Button>
       </div>
     ) : null;
 
     return (
       <List
-        className="loadmore-list"
+        className={styles.commonentList}
         loading={initLoading}
         itemLayout="horizontal"
         loadMore={loadMore}

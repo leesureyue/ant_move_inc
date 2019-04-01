@@ -13,26 +13,26 @@ const menuData = [
     children: [
       {
         name: '服务管理',
-        path: 'analysis',
+        path: 'service',
       },
       {
         name: '订单管理',
-        path: 'monitor',
+        path: 'order',
       },
       {
         name: '评价管理',
-        path: 'workplace', 
+        path: 'evaluate', 
       },
     ],
   },
   {
     name: '数据分析',
-    icon: 'dashboard',
-    path: '',
+    icon: 'analysis',
+    path: '/layout/dashboard/analysis',
   },{
     name:'店铺信息',
     icon:'shop',
-    path:''
+    path:'/layout/dashboard/info'
   }
 ];
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'umi/link';
-import style from './index.less';
 import cookie from 'react-cookies';
 import classNames from 'classnames';
 import styles from './index.less' 
@@ -11,7 +10,7 @@ import {
 } from 'antd';
 
 const SubMenu = Menu.SubMenu; 
-const MenuItemGroup = Menu.ItemGroup;
+
 
 
 const  LoginCreateForm =Form.create('login')(
@@ -22,9 +21,9 @@ const  LoginCreateForm =Form.create('login')(
           visible={this.props.visible}
           onOk={this.props.onOk}
           onCancel={this.props.onCancel} 
-          className={style.loginModal}>
+          className={styles.loginModal}>
                   
-          <Form className={style.form}>
+          <Form className={styles.form}>
             <Form.Item>
               {this.props.form.getFieldDecorator('name',{
                 rules:[{required:true,message:'请输入用户名'}]
@@ -149,7 +148,6 @@ class GlobalMenu extends React.Component{
 
   //弹出登陆窗
   showLoginModal=()=>{
-    console.log("login")
     this.setState({loginVisible:true,registerVisible:false})
   }
   //弹出注册窗口
@@ -171,7 +169,6 @@ class GlobalMenu extends React.Component{
         })
       }
     });
-    
   }
   //点击取消
   handleCancel=()=>{
@@ -196,7 +193,7 @@ class GlobalMenu extends React.Component{
         onCancel={this.handleCancel} onOk={this.handleRegister}
       />
 
-      <Menu className={style.globalMenu}
+      <Menu className={styles.globalMenu}
         mode="horizontal" 
         onClick={this.handleClick}
         selectedKeys={[this.state.current]}
@@ -206,7 +203,7 @@ class GlobalMenu extends React.Component{
         this.state.userName ?
         <SubMenu title={
           
-          <Avatar  className={style.avatar}>     
+          <Avatar  className={styles.avatar}>     
             {this.state.userName}
           </Avatar>
           
@@ -263,4 +260,4 @@ class GlobalMenuWrapper extends React.Component{
      )
   }
 }
-export default GlobalMenuWrapper;
+export default Form.create()(GlobalMenuWrapper);
