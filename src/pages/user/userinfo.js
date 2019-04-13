@@ -5,7 +5,7 @@ import reqwest from 'reqwest';
 import {Layout,Menu,Form,Input} from 'antd';
 
 import styles from './userinfo.less';
-
+const { TextArea } = Input
 const {Content ,Sider} = Layout;
 
 const NormalUserInfo = Form.create('user_info')(
@@ -37,7 +37,9 @@ const NormalUserInfo = Form.create('user_info')(
               {
                 this.props.form.getFieldDecorator('introduce',{
                   rules:[{required:true}]
-                })(<Input/>)
+                })( <TextArea 
+                  placeholder="我是一直小小的咸鱼，想翻身" 
+                  autosize={{ minRows: 3, maxRows: 6 }} />)
               }
             </Form.Item> 
             <Form.Item label='电话'>

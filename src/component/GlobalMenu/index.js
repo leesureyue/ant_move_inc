@@ -11,8 +11,6 @@ import {
 
 const SubMenu = Menu.SubMenu; 
 
-
-
 const  LoginCreateForm =Form.create('login')(
   class extends React.Component{
     render(){
@@ -138,12 +136,12 @@ class GlobalMenu extends React.Component{
             method:'post',
             data:values,
           }).then(res=>{
-            cookie.save('name',res.name)
+            cookie.save('name',res.data.name)
+            cookie.save('userId',res.data.id)
             this.setState({registerVisible:false,name:res.name})
           })
       }
-    });
-    
+    }); 
   }
 
   //弹出登陆窗

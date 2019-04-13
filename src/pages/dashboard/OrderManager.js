@@ -1,5 +1,5 @@
 import React from 'React';
-import {Table} from 'antd';
+import {Table,Tag,message} from 'antd';
 import reqwest from 'reqwest';
 
 //订单管理表格
@@ -15,18 +15,34 @@ class OrderTable extends React.Component{
     }
   }
   componentWillMount(){
+    this.getData(this.state.page)
+  }
+
+
+  handleChangeState=(id)=>{
     reqwest({
-      url:'/admin/getOrderList',
-      method:'get',
-      data:{shopId:'',page:this.state.page,pageSize:this.state.pageSize}
-    }).then(req=>{
-      console.log(req.data)   
-      this.setState({page:this.state.page,
-        list:req.data,loading:!req.success,
-        pagination:{current:req.current,total:req.totalCount}
-      })
+      url:'/admin/'
     })
   }
+
+  getData(current){
+    reqwest({
+      url:'/admin/updateOrderStatus',
+      method:'get',
+      data:{orderId:''}
+    }).then(req=>{
+      if(req.success){
+        this.setState({page:this.state.page,
+          list:req.data,loading:!req.success,
+          pagination:{current:req.current,total:req.totalCount}
+        })
+      }else{
+        message.error("错误："+req.msg)
+      }
+    })
+  }
+
+  
   render(){
     const column=[{
       title:'订单号',
@@ -48,17 +64,26 @@ class OrderTable extends React.Component{
       dataIndex:'createTime'
     },{
       title:'总价',
-      dataIndex:'totalPay'
+      dataIndex:'totalPay',
+      sorter: (a, b) => a.totalPay - b.totalPay,
     },{
       title:'订单状态',
-      dataIndex:'orderState'
+      dataIndex:'orderState',
+      render: orderState => (
+        <span>
+          {orderState=='UNCOMMIT' && 
+          <Tag color="#f50">未提交</Tag>}
+          {orderState=='COMMIT' && 
+          <Tag color="#87d068">已提交</Tag>}
+          {orderState=='CLOSE' && 
+          <Tag color="#f50">关闭</Tag>}
+        </span>
+      ),
     },{
       title:'操作',
       render:(record)=>{
         return (<span>
-          <a onClick={()=>{console.log(record)}}>编辑</a>
-          <Divider type="vertical" />
-          <a onClick={()=>{console.log(record)}}>删除</a>
+          <a onClick={()=>{}}>修改状态</a>
         </span>)
       }
     }]
@@ -66,8 +91,7 @@ class OrderTable extends React.Component{
 
     return (
     <div>
-      <h2>订单管理</h2>
-      <Table title={()=>'商店订单表'} bordered 
+      <Table title={()=>'商店订单表'} size="middle" 
         columns={column}
         loading={this.state.loading}
         rowKey='id'

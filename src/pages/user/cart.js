@@ -2,28 +2,19 @@ import React from 'react';
 import styles from './cart.less';
 import classNames from 'classnames';
 import Link from 'umi/link';
+import reqwest from 'reqwest';
+import cookie from 'react-cookies';
+
 import 'animate.css';
 import {
-    Steps, Button, Icon,Layout,Affix,Col,Row
+    Steps, Button, Icon,Layout,Affix,Alert,Form,message,Input
 } from 'antd';
 import GlobalMenu from '../../component/GlobalMenu';
 import GlobalFooter from '../../component/GlobalFooter';
 
-const {Header,Content,Footer} =Layout;
+const {Content} =Layout;
 const Step = Steps.Step;
-
-//确认订单
-const ConfirmOrder=({order})=>{
-  
-  return (
-    <div>
-      <p>订单号：{order.id}</p>
-      <p>服务id号：{order.shopId}</p>
-      <p>价格：{order.price}</p>
-    </div>
-  )
-}
-
+ 
 //提交订单，扫描二维码
 const SubmitOrder=({price})=>(
   <div>
@@ -42,7 +33,9 @@ const CompleteOrder =()=>(
       回到首页
     </Button>
     </Link>
+    <Link to='/user/order'>
     <Button  size='large' type='default' icon='shopping'>查看订单</Button>
+    </Link>
   </div>
 )
 
@@ -50,39 +43,65 @@ const CompleteOrder =()=>(
 class ShoppingCart extends React.Component{
     constructor(props){
         super(props);
+        let userId= cookie.load('userId');
+        console.log('userId:'+userId);
         this.state={
             current:0,
+            order:{},
+            userId:userId
         }
     }
 
     next() {
-        const current = this.state.current + 1;
-        this.setState({ current });
+      if(this.state.current==1){
+        this.submitOrder(this.props.location.state.id)
+      }
+      if(this.state.current==0){
+        this.createOrder()
+      }
       }
       
     prev() {
       const current = this.state.current - 1;
       this.setState({ current });
     }
+
+
+    submitOrder=(id)=>{
+      let userId= cookie.load('userId');
+      reqwest({
+        url:'/user/submitOrder',
+        method:'get',
+        data:{orderId:id}
+      }).then(req=>{
+         console.log(req)
+         const current = this.state.current + 1;
+         this.setState({ current }); 
+      })
+    }
+    createOrder=()=>{
+      this.props.form.validateFields((err,values)=>{
+        console.log(values)
+        if(!err){
+          reqwest({
+            url:'/user/createOrder',
+            method:'post',
+            data:values
+          }).then(req=>{
+            this.setState({order:req.data})
+            const current = this.state.current + 1;
+            this.setState({ current }); 
+          })
+        }
+      })
+    }
       
     render(){
-        console.log(this.props.location.state)
-        const steps = [{
-          key:'1',
-          title: '确认订单',
-          content: <ConfirmOrder order={this.props.location.state}/>,
-        }, {
-          key:'2',
-          title: '提交订单',
-          content: <SubmitOrder 
-                        price={this.props.location.state.price}/>,
-        }, {
-          key:'3',
-          title: '完成支付',
-          content: <CompleteOrder/>,
-        }];
-
-        const {current} =this.state;
+      const steps = [
+        {key:'1',title: '确认订单'},
+        {key:'2',title: '提交订单'},
+        {key:'3',title: '完成支付'}]; 
+      const {current} =this.state;
         return (
           <Layout>
               <Affix>
@@ -95,7 +114,40 @@ class ShoppingCart extends React.Component{
                         <Step key={item.key} title={item.title} />)
                     }
                   </Steps>
-                    <div className={styles.content}>{steps[current].content}</div>
+                  {current==0 && <Alert message="请完善订单信息" type="warning" showIcon />}
+                  <div className={styles.content}>
+                    {current==0 && 
+                    <Form>
+                        <Form.Item label='用户Id'>
+                        {this.props.form.getFieldDecorator('userId')
+                        (<Input disabled/>)}
+                        </Form.Item>
+                        <Form.Item label='服务Id'>
+                        {this.props.form.getFieldDecorator('serviceId')
+                        (<Input  disabled/>)}
+                        </Form.Item>
+                        <Form.Item label='服务地址'>
+                        {this.props.form.getFieldDecorator('address',{
+                                rules:[{required:true,message:'请输入搬家起始地址'}]
+                              })
+                        (<Input placeholder='请输入搬家起始地址'/>)}
+                        </Form.Item>
+                        <Form.Item label='目的地'>
+                        {this.props.form.getFieldDecorator('destination',{
+                          rules:[{required:true,message:'请输入搬家目的地'}]
+                        })
+                        (<Input placeholder='请输入搬家目的地'/>)}
+                        </Form.Item>
+                        <Form.Item label='目的地'>
+                        {this.props.form.getFieldDecorator('totalPay')
+                        (<Input disabled/>)}
+                        </Form.Item>
+                      </Form>
+                    }
+                    {current==1 && <SubmitOrder 
+                        price={this.props.location.state.price}/>}
+                    {current==2 && <CompleteOrder/>}
+                  </div>
 
                     <div className={styles.stepsAction}>
                       {
@@ -113,12 +165,21 @@ class ShoppingCart extends React.Component{
                       } 
                   </div>
                 </div>
-            </Content>
-
+            </Content> 
              <GlobalFooter/>
           </Layout>
         )
     }
+
+    componentDidMount(){
+      const service=this.props.location.state;
+      console.log(service)
+      this.props.form.setFieldsValue({
+        'userId':'123',
+        'serviceId':service.id,
+        'totalPay':service.price
+      })
+    }
 }
 
-export default ShoppingCart;
+export default Form.create()(ShoppingCart);

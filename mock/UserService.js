@@ -70,5 +70,31 @@ export default {
             "avatar": null
         }
     })
+    },
+    'post /user/createOrder':function(req,res,next){
+      res.json({
+        "code": "200",
+        "msg": "success",
+        "success": true,  
+        "data": {
+            "id": 1550004014446,
+            "userId": 1549983823996,
+            "serviceId": 1,
+            "address": "杭州",
+            "destination": "开封",
+            "createTime": "2019-04-01T14:17:43.425+0000",
+            "totalPay": 1800,
+            "isDeleted": false,
+            "orderState": "UNCOMMIT"
+        }
+    })
+    },
+    'get /user/submitOrder':function(req,res,next){
+      res.json({
+        "code": "200",
+        "msg": "success",
+        "success": true,  
+        "data":true
+      })
     }
 }
